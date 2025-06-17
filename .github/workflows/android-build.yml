@@ -15,11 +15,13 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y python3-pip openjdk-17-jdk unzip git zip build-essential libffi-dev libssl-dev libjpeg-dev zlib1g-dev ffmpeg
-        pip install --upgrade pip
-        pip install buildozer cython
+        pip3 install --upgrade pip
+        pip3 install Cython==0.29.33 buildozer cython  # pin Cython per known issues
 
     - name: Build APK
-      run: buildozer android debug
+      run: |
+        buildozer android clean  # ensure a clean build
+        buildozer android debug
 
     - name: Upload APK
       uses: actions/upload-artifact@v3
